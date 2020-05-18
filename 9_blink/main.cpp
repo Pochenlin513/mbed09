@@ -50,6 +50,7 @@ void LEDControl (Arguments *in, Reply *out)   {
     int led = x;
     int on = y;
     int n;
+    int on2 = !on;
     if(on == 1){
         n = sprintf(strings, "/myled1/write 1");
         strcpy(buffer, strings);
@@ -63,11 +64,32 @@ void LEDControl (Arguments *in, Reply *out)   {
     }
     else{
         for(int i = 0; i < 10; i++){
-            n = sprintf(strings, "/myled%d/write %d", led, on);
+            n = sprintf(strings, "/myled1/write 0");
+            strcpy(buffer, strings);
+            RPC::call(buffer, outbuf);
+            n = sprintf(strings, "/myled1/write 1");
+            strcpy(buffer, strings);
+            RPC::call(buffer, outbuf);
+            n = sprintf(strings, "/myled3/write 1");
+            strcpy(buffer, strings);
+            RPC::call(buffer, outbuf);
+            n = sprintf(strings, "/myled3/write 0");
             strcpy(buffer, strings);
             RPC::call(buffer, outbuf);
             wait(0.25);
-            on = !on;
+            n = sprintf(strings, "/myled1/write 1");
+            strcpy(buffer, strings);
+            RPC::call(buffer, outbuf);
+            n = sprintf(strings, "/myled1/write 0");
+            strcpy(buffer, strings);
+            RPC::call(buffer, outbuf);
+            n = sprintf(strings, "/myled3/write 0");
+            strcpy(buffer, strings);
+            RPC::call(buffer, outbuf);
+            n = sprintf(strings, "/myled3/write 1");
+            strcpy(buffer, strings);
+            RPC::call(buffer, outbuf);
+            wait(0.25);
         }
     }
 
